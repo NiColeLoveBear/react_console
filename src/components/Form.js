@@ -19,6 +19,7 @@ class Form extends Component{
   }
 
   getFormData(){
+    console.log(this.refs.form);
     return new FormData(this.refs.form);
   }
 
