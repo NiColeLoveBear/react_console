@@ -22,7 +22,6 @@ class  Table extends Component{
 
 
   render(){
-    console.log(this.props);
     return (
       <table className="table">
         <thead>

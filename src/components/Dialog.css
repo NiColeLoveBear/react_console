@@ -17,3 +17,8 @@
     opacity: 0.3;
     z-index: 98;
 }
+
+.dialog-panel .panel-body{
+    max-height: 400px;
+    overflow: auto;
+}

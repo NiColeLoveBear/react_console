@@ -12,6 +12,10 @@ import React , {Component} from  'react';
 class Form extends Component{
   constructor(...args){
     super(...args);
+
+    this.state={
+      counts: []
+    };
   }
 
   getFormRef(){
@@ -30,12 +34,32 @@ class Form extends Component{
       <form ref={'form'}>
         {this.props.fileds?this.props.fileds.map((filed, index) =>{
           let id ='id_'+ Math.floor( Math.random()*100000000);
-          return (
-            <div className="form-group" key={index}>
-              <label htmlFor={id}>{filed.label}</label>
-              <input type={filed.type}  className="form-control" id={id}  name={filed.name} placeholder={filed.placeholder} />
-            </div>
-          );
+          if(filed.isArray){
+            this.state.counts[filed.name] = this.state.counts[filed.name] || 10;
+            return (
+              <div className="form-group" key={index}>
+                <label htmlFor={id}>{filed.label}</label>
+                { Array.from( new Array(this.state.counts[filed.name])).map((item , index) =>(
+                  <input key={id+'_'+index} type={filed.type}  className="form-control"   name={filed.name} placeholder={filed.placeholder}   defaultValue={filed.value}/>
+                ))}
+              </div>
+            );
+          }else {
+            if (filed.label) {
+              return (
+                <div className="form-group" key={index}>
+                  <label htmlFor={id}>{filed.label}</label>
+                  <input type={filed.type}  className="form-control" id={id}  name={filed.name} placeholder={filed.placeholder}   defaultValue={filed.value}/>
+                </div>
+              );
+            }else {
+              return (
+                <input type={filed.type}  className="form-control" id={id}  name={filed.name} placeholder={filed.placeholder}   defaultValue={filed.value}/>
+              );
+            }
+
+          }
+
         }):''}
         <div className="form-group">
           {this.props.btns?this.props.btns.map((btn, index) =>{
